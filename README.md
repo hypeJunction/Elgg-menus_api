@@ -22,7 +22,7 @@ $menu_items = menus_api_combine_menus([
 
 ```php
 $params = menus_api_prepare_params('user_hover', ['entity' => 'user]);
-$items = menus_api_get_menu('user_hover', ['entity' => $user]);
+$items = menus_api_get_menu('user_hover', $params);
 ```
 
 ### Add icon and indicator
@@ -53,4 +53,4 @@ echo menus_api_view_menu('user_hover', [
 
 ## Note
 
- * This plugin replaces the default `navigation/menu/elements/item` view
+ * This plugin replaces the default menu, section and item views
