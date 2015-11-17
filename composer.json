@@ -1,0 +1,21 @@
+{
+	"name": "hypejunction/menus_api",
+	"version": "1.0.0",
+	"type": "elgg-plugin",
+	"description": "Menus API",
+	"homepage": "http://hypejunction.com",
+	"keywords": [
+		"elgg", "plugin", "menus"
+	],
+	"license": "GPL-2.0",
+	"authors": [
+		{
+			"name": "Ismayil Khayredinov",
+			"email": "info@hypejunction.com"
+		}
+	],
+	"require-dev": {
+		"composer/installers": "1.*"
+	}
+}
+
