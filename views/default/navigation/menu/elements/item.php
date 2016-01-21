@@ -16,6 +16,7 @@ if (!$item instanceof \ElggMenuItem) {
 $item->addItemClass('elgg-menu-item');
 
 $children = $item->getChildren();
+
 if ($children) {
 	$link_class = $item->getSelected() ? 'elgg-menu-opened' : 'elgg-menu-closed';
 	$item->addLinkClass($link_class);
@@ -27,8 +28,12 @@ if ($item->getSelected()) {
 }
 
 $text = $item->getText();
-if (!preg_match('~<[a-z]~', $text) && !$item->getHref()) {
-	$text = elgg_format_element('span', ['class' => 'elgg-non-link'], $text);
+if (!preg_match('~<[a-z]~', $text)) {
+	if (!$item->getHref()) {
+		$text = elgg_format_element('span', ['class' => 'elgg-non-link'], $text);
+	} else if ($text) {
+		$text = elgg_format_element('span', ['class' => 'elgg-menu-label'], $text);
+	}
 }
 
 $icon_view = '';
@@ -54,6 +59,8 @@ if ($children) {
 	$item_view .= elgg_view('navigation/menu/elements/section', [
 		'items' => $children,
 		'class' => 'elgg-menu elgg-child-menu',
+		'subsections' => $item->getData('subsections'),
+		'child_menu' => true,
 	]);
 }
 
