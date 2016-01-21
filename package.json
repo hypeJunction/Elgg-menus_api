@@ -1,12 +1,12 @@
 {
   "name": "menus_api",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "license": "GPL-2.0",
   "repository": {
     "type": "git",
-    "url": "git@github.com:hypeJunction/menus_api.git",
+    "url": "git@github.com:hypeJunction/Elgg-menus_api.git",
     "owner": "hypeJunction",
-    "repo": "menus_api"
+    "repo": "Elgg-menus_api"
   },
   "devDependencies": {
     "curlrequest": "^0.3.10",
