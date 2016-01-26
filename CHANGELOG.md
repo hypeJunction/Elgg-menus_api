@@ -1,3 +1,13 @@
+<a name="1.0.3"></a>
+## [1.0.3](https://github.com/hypeJunction/Elgg-menus_api/compare/1.0.2...v1.0.3) (2016-01-26)
+
+
+### Bug Fixes
+
+* **css:** do not show separators in a single dropdown menu ([a665939](https://github.com/hypeJunction/Elgg-menus_api/commit/a665939))
+
+
+
 <a name="1.0.2"></a>
 ## 1.0.2 (2016-01-21)
 
