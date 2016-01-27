@@ -1,3 +1,13 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/hypeJunction/Elgg-menus_api/compare/1.0.3...v1.1.0) (2016-01-27)
+
+
+### Features
+
+* **dropdown:** move dropdown into its own plugin ([d060f58](https://github.com/hypeJunction/Elgg-menus_api/commit/d060f58))
+
+
+
 <a name="1.0.3"></a>
 ## [1.0.3](https://github.com/hypeJunction/Elgg-menus_api/compare/1.0.2...v1.0.3) (2016-01-26)
 
