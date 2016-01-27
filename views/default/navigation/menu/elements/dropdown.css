@@ -1,9 +1,0 @@
-.elgg-menu-dropdown .elgg-child-menu {
-	display: none;
-	max-height: 500px;
-    overflow-y: auto;
-}
-
-.elgg-menu-dropdown .elgg-child-menu:only-of-type > li {
-    border-bottom: none;
-}

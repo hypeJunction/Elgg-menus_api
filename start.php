@@ -8,20 +8,6 @@
  */
 require_once __DIR__ . '/autoloader.php';
 
-elgg_register_event_handler('init', 'system', 'menus_api_init');
-
-/**
- * Initialize
- * @return void
- */
-function menus_api_init() {
-
-	elgg_extend_view('elements/navigation.css', 'navigation/menu/elements/dropdown.css');
-	elgg_extend_view('admin.css', 'navigation/menu/elements/dropdown.css');
-
-	elgg_extend_view('elgg.js', 'navigation/menu/elements/dropdown.js');
-}
-
 /**
  * Get all menu items in a given menu
  *
