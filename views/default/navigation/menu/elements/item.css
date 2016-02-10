@@ -1,0 +1,15 @@
+.elgg-menu-indicator {
+	color: white;
+	background-color: red;
+	border-radius: 100px;
+	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);
+	position: absolute;
+	text-align: center;
+	top: 0px;
+	left: 26px;
+	min-width: 16px;
+	height: 16px;
+	line-height: 16px;
+	font-size: 10px;
+	font-weight: bold;
+}
