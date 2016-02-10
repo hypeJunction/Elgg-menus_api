@@ -1,3 +1,13 @@
+<a name="1.1.1"></a>
+## [1.1.1](https://github.com/hypeJunction/Elgg-menus_api/compare/1.1.0...v1.1.1) (2016-02-10)
+
+
+### Bug Fixes
+
+* **css:** add missing style for menu indicator ([cf9d930](https://github.com/hypeJunction/Elgg-menus_api/commit/cf9d930))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/hypeJunction/Elgg-menus_api/compare/1.0.3...v1.1.0) (2016-01-27)
 
