@@ -28,7 +28,14 @@ function menus_api_init() {
 function menus_api_get_menu($menu_name, array $params = []) {
 	$menus = elgg_get_config('menus');
 	$menu = (array) elgg_extract($menu_name, $menus, []);
-	return elgg_trigger_plugin_hook('register', "menu:$menu_name", $params, $menu);
+	// Wrap in MenuItems so core hook handlers can call merge()/filter()
+	$menu_items = new \Elgg\Menu\MenuItems($menu);
+	$result = elgg_trigger_plugin_hook('register', "menu:$menu_name", $params, $menu_items);
+	// Convert back to array for downstream consumers
+	if ($result instanceof \Traversable) {
+		return iterator_to_array($result);
+	}
+	return (array) $result;
 }
 
 /**
