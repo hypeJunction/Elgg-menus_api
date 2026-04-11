@@ -8,14 +8,21 @@ use ElggMenuItem;
 class FunctionsTest extends IntegrationTestCase {
 
 	/**
-	 * {@inheritdoc}
+	 * Override to prevent auto-skip when plugin isn't active in test DB.
 	 */
-	public static function setUpBeforeClass(): void {
-		parent::setUpBeforeClass();
-
-		// Ensure lib functions are loaded
-		require_once dirname(__DIR__, 5) . '/lib/functions.php';
+	public function getPluginID(): string {
+		return '';
 	}
+
+	public function up() {
+		// Ensure lib functions are loaded
+		$libFile = dirname(__DIR__, 5) . '/lib/functions.php';
+		if (!function_exists('menus_api_get_menu')) {
+			require_once $libFile;
+		}
+	}
+
+	public function down() {}
 
 	public function testPrepareParamsDefaultSortBy() {
 		$result = menus_api_prepare_params('test_default_sort', []);
