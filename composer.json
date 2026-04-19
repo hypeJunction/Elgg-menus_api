@@ -5,7 +5,9 @@
 	"description": "Menus API",
 	"homepage": "http://hypejunction.com",
 	"keywords": [
-		"elgg", "plugin", "menus"
+		"elgg",
+		"plugin",
+		"menus"
 	],
 	"license": "GPL-2.0",
 	"authors": [
@@ -23,6 +25,10 @@
 		"allow-plugins": {
 			"composer/installers": true
 		}
+	},
+	"extra": {
+		"elgg-plugin": {
+			"id": "menus_api"
+		}
 	}
 }
-
