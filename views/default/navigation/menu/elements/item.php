@@ -54,7 +54,7 @@ if ($item->getData('title')) {
 
 $item->setText($icon_view . $text . $indicator_view);
 
-$item_view = elgg_view_menu_item($item);
+$item_view = elgg_view('navigation/menu/elements/item/url', ['item' => $item]);
 if ($children) {
 	$item_view .= elgg_view('navigation/menu/elements/section', [
 		'items' => $children,

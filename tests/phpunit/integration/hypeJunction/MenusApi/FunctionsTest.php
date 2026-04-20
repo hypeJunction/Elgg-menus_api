@@ -44,23 +44,23 @@ class FunctionsTest extends IntegrationTestCase {
 	public function testPrepareParamsTriggersHook() {
 		$hook_called = false;
 
-		$handler = function (\Elgg\Hook $hook) use (&$hook_called) {
+		$handler = function (\Elgg\Event $event) use (&$hook_called) {
 			$hook_called = true;
-			return $hook->getValue();
+			return $event->getValue();
 		};
 
-		elgg_register_plugin_hook_handler('parameters', 'menu:test_params_hook', $handler);
+		elgg_register_event_handler('parameters', 'menu:test_params_hook', $handler);
 
 		menus_api_prepare_params('test_params_hook', []);
 
-		$this->assertTrue($hook_called, 'The parameters:menu:test_params_hook hook should have been triggered');
+		$this->assertTrue($hook_called, 'The parameters:menu:test_params_hook event should have been triggered');
 
-		elgg_unregister_plugin_hook_handler('parameters', 'menu:test_params_hook', $handler);
+		elgg_unregister_event_handler('parameters', 'menu:test_params_hook', $handler);
 	}
 
 	public function testGetMenuTriggersRegisterHook() {
-		$handler = function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		$handler = function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value[] = \ElggMenuItem::factory([
 				'name' => 'hook_item',
 				'text' => 'Hook Item',
@@ -69,11 +69,11 @@ class FunctionsTest extends IntegrationTestCase {
 			return $value;
 		};
 
-		elgg_register_plugin_hook_handler('register', 'menu:test_register_hook', $handler);
+		elgg_register_event_handler('register', 'menu:test_register_hook', $handler);
 
 		$result = menus_api_get_menu('test_register_hook', []);
 
-		$this->assertNotEmpty($result, 'Menu should contain items added via hook');
+		$this->assertNotEmpty($result, 'Menu should contain items added via event');
 
 		$found = false;
 		foreach ($result as $item) {
@@ -82,9 +82,9 @@ class FunctionsTest extends IntegrationTestCase {
 				break;
 			}
 		}
-		$this->assertTrue($found, 'Menu should contain the item added by the register hook');
+		$this->assertTrue($found, 'Menu should contain the item added by the register event');
 
-		elgg_unregister_plugin_hook_handler('register', 'menu:test_register_hook', $handler);
+		elgg_unregister_event_handler('register', 'menu:test_register_hook', $handler);
 	}
 
 	public function testGetMenuReturnsMenuItems() {
@@ -96,12 +96,12 @@ class FunctionsTest extends IntegrationTestCase {
 	public function testPrepareMenuTriggersHook() {
 		$hook_called = false;
 
-		$handler = function (\Elgg\Hook $hook) use (&$hook_called) {
+		$handler = function (\Elgg\Event $event) use (&$hook_called) {
 			$hook_called = true;
-			return $hook->getValue();
+			return $event->getValue();
 		};
 
-		elgg_register_plugin_hook_handler('prepare', 'menu:test_prepare_hook', $handler);
+		elgg_register_event_handler('prepare', 'menu:test_prepare_hook', $handler);
 
 		$items = [
 			\ElggMenuItem::factory([
@@ -113,14 +113,14 @@ class FunctionsTest extends IntegrationTestCase {
 
 		menus_api_prepare_menu($items, ['name' => 'test_prepare_hook']);
 
-		$this->assertTrue($hook_called, 'The prepare:menu:test_prepare_hook hook should have been triggered');
+		$this->assertTrue($hook_called, 'The prepare:menu:test_prepare_hook event should have been triggered');
 
-		elgg_unregister_plugin_hook_handler('prepare', 'menu:test_prepare_hook', $handler);
+		elgg_unregister_event_handler('prepare', 'menu:test_prepare_hook', $handler);
 	}
 
 	public function testViewMenuReturnsHtml() {
-		$handler = function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		$handler = function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value[] = \ElggMenuItem::factory([
 				'name' => 'view_test_item',
 				'text' => 'View Test Item',
@@ -129,19 +129,19 @@ class FunctionsTest extends IntegrationTestCase {
 			return $value;
 		};
 
-		elgg_register_plugin_hook_handler('register', 'menu:test_view_menu', $handler);
+		elgg_register_event_handler('register', 'menu:test_view_menu', $handler);
 
 		$result = menus_api_view_menu('test_view_menu', []);
 
 		$this->assertIsString($result);
 		$this->assertNotEmpty($result);
 
-		elgg_unregister_plugin_hook_handler('register', 'menu:test_view_menu', $handler);
+		elgg_unregister_event_handler('register', 'menu:test_view_menu', $handler);
 	}
 
 	public function testCombineMenusMergesItems() {
-		$handler_a = function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		$handler_a = function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value[] = \ElggMenuItem::factory([
 				'name' => 'item_a',
 				'text' => 'Item A',
@@ -151,8 +151,8 @@ class FunctionsTest extends IntegrationTestCase {
 			return $value;
 		};
 
-		$handler_b = function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		$handler_b = function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			$value[] = \ElggMenuItem::factory([
 				'name' => 'item_b',
 				'text' => 'Item B',
@@ -162,8 +162,8 @@ class FunctionsTest extends IntegrationTestCase {
 			return $value;
 		};
 
-		elgg_register_plugin_hook_handler('register', 'menu:menu_a', $handler_a);
-		elgg_register_plugin_hook_handler('register', 'menu:menu_b', $handler_b);
+		elgg_register_event_handler('register', 'menu:menu_a', $handler_a);
+		elgg_register_event_handler('register', 'menu:menu_b', $handler_b);
 
 		$result = menus_api_combine_menus(['menu_a', 'menu_b'], []);
 
@@ -176,13 +176,13 @@ class FunctionsTest extends IntegrationTestCase {
 		$this->assertContains('item_a', $names);
 		$this->assertContains('item_b', $names);
 
-		elgg_unregister_plugin_hook_handler('register', 'menu:menu_a', $handler_a);
-		elgg_unregister_plugin_hook_handler('register', 'menu:menu_b', $handler_b);
+		elgg_unregister_event_handler('register', 'menu:menu_a', $handler_a);
+		elgg_unregister_event_handler('register', 'menu:menu_b', $handler_b);
 	}
 
 	public function testCombineMenusRenamesSections() {
-		$handler = function (\Elgg\Hook $hook) {
-			$value = $hook->getValue();
+		$handler = function (\Elgg\Event $event) {
+			$value = $event->getValue();
 			// ElggMenuItem defaults to 'default' section when none specified
 			$value[] = \ElggMenuItem::factory([
 				'name' => 'default_section_item',
@@ -192,7 +192,7 @@ class FunctionsTest extends IntegrationTestCase {
 			return $value;
 		};
 
-		elgg_register_plugin_hook_handler('register', 'menu:rename_test_menu', $handler);
+		elgg_register_event_handler('register', 'menu:rename_test_menu', $handler);
 
 		$result = menus_api_combine_menus(['rename_test_menu'], []);
 
@@ -205,6 +205,6 @@ class FunctionsTest extends IntegrationTestCase {
 		$this->assertEquals('rename_test_menu', $item->getData('menu_name'),
 			'Each item should have menu_name data set');
 
-		elgg_unregister_plugin_hook_handler('register', 'menu:rename_test_menu', $handler);
+		elgg_unregister_event_handler('register', 'menu:rename_test_menu', $handler);
 	}
 }

@@ -23,6 +23,15 @@ $name_selector = preg_replace('/[^a-z0-9\-]/i', '-', $name);
 $menu = elgg_extract('menu', $vars);
 unset($vars['menu']);
 
+// Elgg 5.x returns PreparedMenu objects; convert to section-keyed array
+if ($menu instanceof \Elgg\Menu\PreparedMenu) {
+	$menu_flat = [];
+	foreach ($menu as $section) {
+		$menu_flat[$section->getID()] = $section->all();
+	}
+	$menu = $menu_flat;
+}
+
 $ordered_menu = [];
 
 // allow plugins to specify which sections to show and in which order

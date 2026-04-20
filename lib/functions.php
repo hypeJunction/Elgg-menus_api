@@ -15,7 +15,7 @@ function menus_api_get_menu($menu_name, array $params = []) {
 	$menus = elgg_get_config('menus');
 	$menu = (array) elgg_extract($menu_name, $menus, []);
 	$menu_items = new \Elgg\Menu\MenuItems($menu);
-	$result = elgg_trigger_plugin_hook('register', "menu:$menu_name", $params, $menu_items);
+	$result = elgg_trigger_event_results('register', "menu:$menu_name", $params, $menu_items);
 	if ($result instanceof \Traversable) {
 		return iterator_to_array($result);
 	}
@@ -31,7 +31,7 @@ function menus_api_get_menu($menu_name, array $params = []) {
  */
 function menus_api_prepare_params($menu_name, array $params = []) {
 	$params['name'] = $menu_name;
-	$params = elgg_trigger_plugin_hook('parameters', "menu:$menu_name", $params, $params);
+	$params = elgg_trigger_event_results('parameters', "menu:$menu_name", $params, $params);
 	if (!isset($params['sort_by'])) {
 		$params['sort_by'] = 'priority';
 	}
@@ -54,7 +54,7 @@ function menus_api_prepare_menu($menu, array $params = []) {
 	$params['menu'] = $builder->getMenu($sort_by);
 	$params['selected_item'] = $builder->getSelected();
 
-	return elgg_trigger_plugin_hook('prepare', "menu:$menu_name", $params, $params['menu']);
+	return elgg_trigger_event_results('prepare', "menu:$menu_name", $params, $params['menu']);
 }
 
 /**
