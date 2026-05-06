@@ -67,7 +67,7 @@ if ($children) {
 echo elgg_format_element('li', [
 	'class' => $item->getItemClass(),
 	'data-menu-item' => $item->getName(),
-		], $item_view);
+], $item_view);
 
 $require = (array) $item->getData('require');
 if (!empty($require)) {

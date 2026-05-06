@@ -29,6 +29,7 @@ if ($menu instanceof \Elgg\Menu\PreparedMenu) {
 	foreach ($menu as $section) {
 		$menu_flat[$section->getID()] = $section->all();
 	}
+
 	$menu = $menu_flat;
 }
 
@@ -46,6 +47,7 @@ foreach ($menu_sections as $section) {
 	if (!in_array($section, $display_sections)) {
 		continue;
 	}
+
 	$ordered_menu[$section] = $menu[$section];
 }
 

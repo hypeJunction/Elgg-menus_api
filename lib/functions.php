@@ -19,6 +19,7 @@ function menus_api_get_menu($menu_name, array $params = []) {
 	if ($result instanceof \Traversable) {
 		return iterator_to_array($result);
 	}
+
 	return (array) $result;
 }
 
@@ -35,6 +36,7 @@ function menus_api_prepare_params($menu_name, array $params = []) {
 	if (!isset($params['sort_by'])) {
 		$params['sort_by'] = 'priority';
 	}
+
 	return $params;
 }
 
@@ -89,14 +91,17 @@ function menus_api_combine_menus(array $menu_names = [], array $params = []) {
 		if (!is_array($items) || empty($items)) {
 			continue;
 		}
+
 		foreach ($items as $item) {
 			if (!$item instanceof \ElggMenuItem) {
 				continue;
 			}
+
 			$section = $item->getSection();
 			if ($section == 'default') {
 				$item->setSection($menu_name);
 			}
+
 			$item->setData('menu_name', $menu_name);
 			$return[] = $item;
 		}
