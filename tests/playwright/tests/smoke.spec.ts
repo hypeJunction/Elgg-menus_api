@@ -28,21 +28,21 @@ test.describe('menus_api', () => {
   });
 
   test('elgg.css simplecache resolves with menu item extension applied', async ({ page }) => {
-    // The plugin extends elements/navigation.css with
-    // navigation/menu/elements/item.css. After activation the elgg.css
-    // simplecache aggregate should compile without error and serve a
-    // 2xx response. Drift in the extension target key shows up as a
-    // 404 on the elgg.css URL or an unparseable CSS file.
-    const response = await page.goto('/cache/0/default/elgg.css');
-    expect(response, 'elgg.css response should exist').toBeTruthy();
-    if (response!.status() === 404) {
-      // Fallback for sites without simplecache aliasing — try the
-      // unbusted view path.
-      const fallback = await page.goto('/cache/default/elgg.css');
-      expect(fallback?.status() || 0).toBeLessThan(500);
-      return;
+    // Navigate to homepage first to find the real simplecache URL.
+    // Elgg 5.x uses a real timestamp (/cache/<ts>/default/elgg.css),
+    // not /cache/0/… — navigating to /cache/0/ returns 410 Gone.
+    await page.goto('/');
+    const cssLink = page.locator('link[rel="stylesheet"][href*="elgg.css"]').first();
+    const href = await cssLink.getAttribute('href').catch(() => null);
+
+    let cssPath = '/cache/default/elgg.css';
+    if (href) {
+      try { cssPath = new URL(href).pathname; } catch { cssPath = href; }
     }
-    expect(response!.status()).toBeLessThan(400);
+
+    const response = await page.goto(cssPath);
+    expect(response, 'elgg.css response should exist').toBeTruthy();
+    expect(response!.status(), `unexpected CSS status ${response!.status()} on ${cssPath}`).toBeLessThan(400);
     const ct = response!.headers()['content-type'] || '';
     expect(ct).toMatch(/css|text/);
   });
