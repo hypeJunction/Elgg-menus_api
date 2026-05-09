@@ -5,7 +5,7 @@ return [
 		'id' => 'menus_api',
 		'name' => 'Menus API',
 		'version' => '2.0.0',
-		'description' => 'Menus API for Elgg plugins.',
+		'description' => 'Extends Elgg\'s menu system with a programmatic API for combining, filtering, and rendering navigation menus across plugins.',
 		'author' => 'Ismayil Khayredinov',
 		'category' => 'utility',
 	],

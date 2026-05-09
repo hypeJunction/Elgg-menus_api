@@ -1,82 +1,29 @@
-Menus API
-=========
-![Elgg 2.0](https://img.shields.io/badge/Elgg-2.0.x-orange.svg?style=flat-square)
+# Menus API
 
-Various convenient functions and views for working with menus
+![Elgg 5.0](https://img.shields.io/badge/Elgg-5.0-orange.svg?style=flat-square)
 
-![Title Menu](https://raw.github.com/hypeJunction/Elgg-menus_api/master/screenshots/title.png "Sample Title Menu")
+Extends Elgg's menu system with a programmatic API for combining, filtering, and rendering navigation menus across plugins.
 
-## Usage
+## Features
 
-### Combine menus
+- Combine multiple Elgg menus into a single item list (`menus_api_combine_menus()`)
+- Retrieve and filter menu items with prepared parameters (`menus_api_get_menu()`)
+- Render menus scoped to specific sections with custom sort order (`menus_api_view_menu()`)
+- Decorate menu items with icons and badge indicators via `data-icon` / `data-indicator`
+- Break child menus into ordered subsections
 
-```php
-$menu_items = menus_api_combine_menus([
-    'entity',
-    'owner_block',
-    'user_hover'
-], [
-    'entity' => $user,
-]);
+## Installation
+
+**Via Composer (recommended):**
+
+```bash
+composer require hypejunction/menus_api
 ```
 
-### Get menu items
+**Manual:**
 
-```php
-$params = menus_api_prepare_params('user_hover', ['entity' => 'user]);
-$items = menus_api_get_menu('user_hover', $params);
-```
+Download the zip, extract into your Elgg `mod/` directory, and activate in the admin panel.
 
-### Add icon and indicator
+## License
 
-```php
-$item = ElggMenuItem::factory([
-    'name' => 'messages',
-    'text' => 'New messages',
-    'href' => '/messages',
-    'data' => [
-        'indicator' => 5,
-        'icon' => 'envelope',
-        'require' => ['js/menu/module'],
-    ]
-]);
-```
-
-### Only show certain menu sections
-
-```php
-echo menus_api_view_menu('user_hover', [
-    'entity' => $user,
-    'sections' => ['admin', 'action'],
-    'sort_by' => 'priority',
-]);
-```
-
-### Child menu subsections
-
-You can break down child menus into subsections, and list them in a predefined order.
-
-```php
-$parent = ElggMenuItem::factory([
-	'name' => 'parent',
-	'text' => 'Parent',
-	'data' => [
-		'subsections' => ['actions', 'admin']
-	]
-]);
-
-
-$item = ElggMenuItem::factory([
-	'name' => 'action',
-	'parent_name' => 'parent',
-	'text' => 'Action',
-	'data' => [
-		'subsection' => 'actions'
-	]
-]);
-```
-
-
-## Note
-
- * This plugin replaces the default menu, section and item views
+GPL-2.0
