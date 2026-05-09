@@ -1,15 +1,25 @@
+:root {
+	--menus-indicator-color: white;
+	--menus-indicator-bg: red;
+	--menus-indicator-border-radius: 100px;
+	--menus-indicator-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);
+	--menus-indicator-left: 26px;
+	--menus-indicator-size: 16px;
+	--menus-indicator-font-size: 10px;
+}
+
 .elgg-menu-indicator {
-	color: white;
-	background-color: red;
-	border-radius: 100px;
-	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);
+	color: var(--menus-indicator-color);
+	background-color: var(--menus-indicator-bg);
+	border-radius: var(--menus-indicator-border-radius);
+	box-shadow: var(--menus-indicator-shadow);
 	position: absolute;
 	text-align: center;
 	top: 0px;
-	left: 26px;
-	min-width: 16px;
-	height: 16px;
-	line-height: 16px;
-	font-size: 10px;
+	left: var(--menus-indicator-left);
+	min-width: var(--menus-indicator-size);
+	height: var(--menus-indicator-size);
+	line-height: var(--menus-indicator-size);
+	font-size: var(--menus-indicator-font-size);
 	font-weight: bold;
 }
