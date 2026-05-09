@@ -1,3 +1,17 @@
+<a name="6.0.0"></a>
+## 6.0.0 (2026-05-09) — Elgg 6.x migration
+
+### Breaking Changes
+
+* **elgg:** raise minimum to Elgg 6.x (PHP 8.1+).
+
+### Migration (5.x → 6.x)
+
+* **composer:** `elgg/elgg ~6.1.0`, PHP `>=8.1`, added `ext-intl`.
+* **elgg-plugin.php:** `views.extensions` converted to root-level `view_extensions` with nested array format.
+* **docker:** test stack added for Elgg 6.x (docker/elgg6/).
+* No data migration required.
+
 <a name="2.0.0"></a>
 ## [2.0.0] — 2026-04-20 (Elgg 5.x migration)
 

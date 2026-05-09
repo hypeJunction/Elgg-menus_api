@@ -1,4 +1,4 @@
-# menus_api — Architecture (Elgg 5.x)
+# menus_api — Architecture (Elgg 6.x)
 
 ## Summary
 
@@ -67,6 +67,14 @@ All are named menu events (Elgg 5.x event system):
 ## Dependencies
 
 None — leaf plugin.
+
+## Migration Notes (5.x → 6.x)
+
+- `elgg/elgg ~6.1.0`, `php >=8.1`, `ext-intl` added in `composer.json`.
+- `views.extensions` key in `elgg-plugin.php` converted to root-level `view_extensions` with nested array format.
+- No JS files — no AMD→ESM conversion needed.
+- Docker test stack added for Elgg 6.x (docker/elgg6/).
+- No data migration needed.
 
 ## Migration Notes (4.x → 5.x)
 
