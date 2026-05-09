@@ -1,50 +1,58 @@
 <?php
 
 /**
- * Menus API helper functions
+ * Menus API
+ *
+ * @author Ismayil Khayredinov <info@hypejunction.com>
+ * @copyright Copyright (c) 2015, Ismayil Khayredinov
  */
+require_once __DIR__ . '/autoloader.php';
+
+elgg_register_event_handler('init', 'system', 'menus_api_init');
 
 /**
- * Get menu items for a named menu
+ * Initialize
+ * @return void
+ */
+function menus_api_init() {
+	elgg_extend_view('elements/navigation.css', 'navigation/menu/elements/item.css');
+}
+
+/**
+ * Get all menu items in a given menu
  *
  * @param string $menu_name Menu name
- * @param array  $params    Additional parameters
- * @return array
+ * @param array  $params    Filtered menu params
+ * @return ElggMenuItem[]
  */
 function menus_api_get_menu($menu_name, array $params = []) {
 	$menus = elgg_get_config('menus');
 	$menu = (array) elgg_extract($menu_name, $menus, []);
-	$menu_items = new \Elgg\Menu\MenuItems($menu);
-	$result = elgg_trigger_event_results('register', "menu:$menu_name", $params, $menu_items);
-	if ($result instanceof \Traversable) {
-		return iterator_to_array($result);
-	}
-
-	return (array) $result;
+	return elgg_trigger_plugin_hook('register', "menu:$menu_name", $params, $menu);
 }
 
 /**
  * Prepare menu parameters
  *
  * @param string $menu_name Menu name
- * @param array  $params    Additional parameters
+ * @param array  $params    Filtered menu params
  * @return array
  */
 function menus_api_prepare_params($menu_name, array $params = []) {
 	$params['name'] = $menu_name;
-	$params = elgg_trigger_event_results('parameters', "menu:$menu_name", $params, $params);
+	$params = elgg_trigger_plugin_hook('parameters', "menu:$menu_name", $params, $params);
 	if (!isset($params['sort_by'])) {
 		$params['sort_by'] = 'priority';
 	}
-
 	return $params;
 }
 
 /**
- * Prepare a menu for rendering
+ * Prepare menu
+ * Returns an array of section => items pairs
  *
- * @param array $menu   Menu items
- * @param array $params Menu parameters
+ * @param ElggMenuItem[] $menu   Menu
+ * @param array          $params Menu params
  * @return array
  */
 function menus_api_prepare_menu($menu, array $params = []) {
@@ -56,15 +64,13 @@ function menus_api_prepare_menu($menu, array $params = []) {
 	$params['menu'] = $builder->getMenu($sort_by);
 	$params['selected_item'] = $builder->getSelected();
 
-	return elgg_trigger_event_results('prepare', "menu:$menu_name", $params, $params['menu']);
+	return elgg_trigger_plugin_hook('prepare', "menu:$menu_name", $params, $params['menu']);
 }
 
 /**
- * View a named menu
  *
- * @param string $menu_name Menu name
- * @param array  $params    Additional parameters
- * @return string
+ * @param type $menu_name
+ * @param array $params
  */
 function menus_api_view_menu($menu_name, array $params = []) {
 
@@ -76,11 +82,12 @@ function menus_api_view_menu($menu_name, array $params = []) {
 }
 
 /**
- * Combine multiple menus into one
+ * Combine several menus into one
+ * Menu items will be reassigned to a section named after the menu they belong to
  *
- * @param array $menu_names Menu names to combine
- * @param array $params     Additional parameters
- * @return array
+ * @param array $menu_names An array of menu name
+ * @param array $params     Menu params
+ * @return ElggMenuItem[]
  */
 function menus_api_combine_menus(array $menu_names = [], array $params = []) {
 
@@ -91,17 +98,14 @@ function menus_api_combine_menus(array $menu_names = [], array $params = []) {
 		if (!is_array($items) || empty($items)) {
 			continue;
 		}
-
 		foreach ($items as $item) {
-			if (!$item instanceof \ElggMenuItem) {
+			if (!$item instanceof ElggMenuItem) {
 				continue;
 			}
-
 			$section = $item->getSection();
 			if ($section == 'default') {
 				$item->setSection($menu_name);
 			}
-
 			$item->setData('menu_name', $menu_name);
 			$return[] = $item;
 		}

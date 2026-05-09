@@ -54,7 +54,7 @@ if ($item->getData('title')) {
 
 $item->setText($icon_view . $text . $indicator_view);
 
-$item_view = elgg_view('navigation/menu/elements/item/url', ['item' => $item]);
+$item_view = elgg_view_menu_item($item);
 if ($children) {
 	$item_view .= elgg_view('navigation/menu/elements/section', [
 		'items' => $children,
@@ -67,7 +67,7 @@ if ($children) {
 echo elgg_format_element('li', [
 	'class' => $item->getItemClass(),
 	'data-menu-item' => $item->getName(),
-], $item_view);
+		], $item_view);
 
 $require = (array) $item->getData('require');
 if (!empty($require)) {
