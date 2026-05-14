@@ -10,8 +10,14 @@ robots.txt
 /releases/
 /vendor/
 composer.lock
-Gemfile.lockdocker/.env
-tests/playwright/node_modules/
-tests/playwright/test-results/
-tests/playwright/playwright-report/
+Gemfile.lock
+
+# Test runner artifacts
 tests/.phpunit.result.cache
+tests/.phpunit.cache/
+tests/playwright/node_modules/
+tests/playwright/playwright-report/
+tests/playwright/test-results/
+
+# Docker scaffold local env
+docker/.env
