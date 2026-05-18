@@ -29,5 +29,10 @@
         "elgg-plugin": {
             "id": "menus_api"
         }
+    },
+    "autoload": {
+        "files": [
+            "lib/functions.php"
+        ]
     }
 }
