@@ -35,7 +35,7 @@ class ViewTest extends IntegrationTestCase {
 		$builder = new \ElggMenuBuilder($items);
 		$menu = $builder->getMenu('priority');
 
-		$output = elgg_view('navigation/menu/default', [
+		$output = \elgg_view('navigation/menu/default', [
 			'name' => 'phpunit_test',
 			'menu' => $menu,
 		]);
@@ -55,7 +55,7 @@ class ViewTest extends IntegrationTestCase {
 			]),
 		];
 
-		$output = elgg_view('navigation/menu/elements/section', [
+		$output = \elgg_view('navigation/menu/elements/section', [
 			'items' => $items,
 			'class' => ['elgg-menu', 'elgg-menu-test'],
 			'section' => 'default',
@@ -74,7 +74,7 @@ class ViewTest extends IntegrationTestCase {
 			'href' => '#rendered',
 		]);
 
-		$output = elgg_view('navigation/menu/elements/item', [
+		$output = \elgg_view('navigation/menu/elements/item', [
 			'item' => $item,
 		]);
 
@@ -98,7 +98,7 @@ class ViewTest extends IntegrationTestCase {
 		]);
 		$parent->setChildren([$child]);
 
-		$output = elgg_view('navigation/menu/elements/item', [
+		$output = \elgg_view('navigation/menu/elements/item', [
 			'item' => $parent,
 		]);
 
@@ -117,7 +117,7 @@ class ViewTest extends IntegrationTestCase {
 			'href' => '#basic',
 		]);
 
-		$output = elgg_view('navigation/menu/elements/item', [
+		$output = \elgg_view('navigation/menu/elements/item', [
 			'item' => $item,
 		]);
 
